@@ -641,6 +641,7 @@ of the picture.
 | Rumble strength | 0 to 3 | 1.5 on desktops, 1.75 on a Steam Deck, 2.0 on Android. 0 turns it off. 1.0 is the Xbox pad's own curve |
 | Face buttons | Xbox layout, Nintendo layout | Xbox layout |
 | Driving controls | Xbox layout, PS2 layout | Xbox layout. See [Controls](#controls) |
+| First controller | Player 1, Player 2 | Player 1: the first controller is player 1 and the keyboard drives the same player. Player 2: the keyboard is player 1 alone and controllers start at player 2, for split screen with a keyboard and a controller. Press a button on each controller after a change. Not on Android |
 | Button prompts | Auto, Xbox (original), Xbox (modern), PlayStation, PlayStation 5, Nintendo, Steam, Positional, Keyboard | Auto |
 | Vibration (Android only) | Auto, Controller, This device, Off | Auto: the device vibrates when you play on its built-in pad |
 | Touch controls (Android only) | Auto, Always, Off | Auto: shown while no controller is in use |
