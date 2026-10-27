@@ -168,7 +168,7 @@ Driving is all of:
 
 | What | Where | Evidence |
 |---|---|---|
-| The game module is the current one, and is not being left | `[0x4D5370]` is the object with vtable 0x3A9ACC (the front end's is 0x3A9E7C); `[0x4D53B4]` is not 6 | the trace: the front-end vtable through boot, menus, garage, the training video and the loading screen; 6 from "Quit > Yes" until the module changes |
+| The game module is the current one, and is not being left | `[0x4D5370]` is the object with vtable 0x3A9ACC, or 0x3A939C in the two-player stage (the front end's is 0x3A9E7C); `[0x4D53B4]` is not 6 | the trace: the front-end vtable through boot, menus, garage, the training video and the loading screen; 6 from "Quit > Yes" until the module changes |
 | Nobody has paused | `[0x4D537C]` is -1 (else the pausing player) | the stage update tests it before it looks at Start (sub_00026050 at 0x26609); 0 on the frame after Start, -1 on the frame Resume takes effect |
 | The title takes a pause now | byte `[0x752D33]` is 0 | tested in the same place; set while the event is left after the results |
 | A crash event's fly-by and captions are not up | byte `[0x4D0767]` is 0 | 1 through the fly-by, and from the captions until A leaves them |
@@ -262,7 +262,7 @@ affected.) A script that is not a stand-in gets neither setting.
 - A controller in the hand: every run above is a pad script standing in for
   one. The built-in pads of the Steam Deck and the Retroid Pocket, Windows
   (native XInput and SDL) and Linux were not run.
-- Two players: the gate reads player 1's event. Split screen was not run.
+- Two players: the gate reads each player's own event (the pad of the title's port 2 is player 1's, port 3 player 2's) and accepts the two-player stage's module. Reported working in split screen on macOS (Apple silicon) with two controllers; which modes were played was not recorded, and the headless scene (`controls_scene.sh`) is still one-player only.
 - A race to its finish line, Road Rage, Burning Lap and online: the end of an
   event was traced in a crash event and by quitting a race.
 - The crashbreaker itself was not triggered in a run (it needs the wrecks);
