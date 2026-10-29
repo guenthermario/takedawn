@@ -86,6 +86,11 @@ static int ctl_driving_for(unsigned player)
     vt = M32(mod);
     if (vt != CTL_VT_GAME && vt != CTL_VT_GAME2)
         return 0;
+    /* One pad at a time plays the one-player stage (and Party Crash, which
+     * passes it on): the first player's records whichever port it is on. Only
+     * the two-player stage has a second player with a pad of their own. */
+    if (vt == CTL_VT_GAME)
+        player = 0;
     /* Quitting from the pause menu clears the paused player a second before
      * the module changes: the module is on its way out then. */
     if (M32(CTL_PAUSED_BY) != 0xFFFFFFFFu || M32(CTL_MODULE_STEP) == 6 || M8(CTL_NO_PAUSE))
@@ -116,11 +121,13 @@ static void ctl_log_frame(void)
         { CTL_P1 + CTL_P_RESULTS, "p1_results" }, { CTL_P1 + CTL_P_STATE, "p1_state" },
         { CTL_P1 + 0x2Cu, "p1_intro_word" }, { CTL_PHASE, "p1_phase" },
         { CTL_COUNTDOWN, "p1_countdown" }, { 0x00752D30u, "752D30" },
-        { CTL_PHASE + 0x27E0u, "p2_phase" },
+        { CTL_PHASE + CTL_E_SIZE, "p2_phase" }, { CTL_COUNTDOWN + CTL_E_SIZE, "p2_countdown" },
+        { CTL_P1 + CTL_P_SIZE + CTL_P_RESULTS, "p2_results" },
+        { CTL_P1 + CTL_P_SIZE + 0x2Cu, "p2_intro_word" },
     };
     enum { N = sizeof w / sizeof w[0] };
     static uint32_t last[N + 1];
-    static int primed, drv = -1;
+    static int primed, drv = -1, drv2 = -1;
     uint32_t flip = s_flips ? s_flips() : 0, mod = M32(CTL_MODULE), v;
     int i, d;
 
@@ -139,6 +146,12 @@ static void ctl_log_frame(void)
     if (d != drv)
         fprintf(s_log, "D %u driving %d\n", flip, d);
     drv = d;
+    /* Player 2's gate, which the pad of the title's port 3 goes by (the same as
+     * player 1's outside the two-player stage). */
+    d = ctl_driving_for(1);
+    if (d != drv2)
+        fprintf(s_log, "D2 %u driving %d\n", flip, d);
+    drv2 = d;
 }
 
 static void ctl_pad(void)
