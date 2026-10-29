@@ -108,6 +108,9 @@ Input > First controller at Player 2 (`input.first_pad = "player2"`,
 first controller to press a button is player 2, so two people can play
 split screen with one keyboard and one controller. Needs a toolkit with
 `input.first_pad`.
+The PS2 driving layout follows the same split: in the two-player stage that
+controller goes by player 2's event, and in the one-player stage and Party Crash
+it goes by player 1's, so a lone controller keeps the PS2 layout there.
 
 ## Touch (Android)
 
